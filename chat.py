@@ -106,6 +106,10 @@ def translateAndFetch(request):
         return getApproversForMessage(arguments[0])
     if methodName == "getDisapproversForMessage":
         return getDisapproversForMessage(arguments[0])
+    if methodName == "addUserToGroup":
+        return addUserToGroup(arguments[0], arguments[1])
+    if methodName == "removeUserFromGroup":
+        return removeUserFromGroup(arguments[0], arguments[1])
 
 def getMessagesInConversation(conversation_id):
     messageIds = messages_dao.getMessagesInConversation(conversation_id)
@@ -147,3 +151,17 @@ def getApproversForMessage(message_id):
 
 def getDisapproversForMessage(message_id):
     return [str(x) for x in messages_dao.usersWhoDisapproveMessage(message_id)]
+
+def addUserToGroup(user_id, group_id):
+    try:
+        group_dao.addUserToGroup(user_id, group_id)
+        return ["success"]
+    except:
+        return ["failure"]
+
+def removeUserFromGroup(user_id, group_id):
+    try:
+        group_dao.removeUserFromGroup(user_id, group_id)
+        return  ["success"]
+    except:
+        return ["failure"]
