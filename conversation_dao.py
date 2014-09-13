@@ -21,16 +21,16 @@ def closeConversation(cid):
 
 def userOptInToConversation(uid, cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""UPDATE UsersToConversation SET isOptedIn = TRUE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
+	cur.execute("""UPDATE UsersToConversation SET is_opted_in = TRUE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
 
 def userOptOutOfConversation(uid, cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""UPDATE UsersToConversation SET isOptedIn = FALSE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
+	cur.execute("""UPDATE UsersToConversation SET is_opted_in = FALSE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
 
 def getUserOptedInConversationsForGroup(uid, gid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""SELECT C.id FROM Conversations C, UsersToConversations UTC 
-				   WHERE C.group_id = %d AND C.id = UTC.conversation_id AND  UTC.user_id = %d AND UTC.isOptedIn = TRUE;""" %
+				   WHERE C.group_id = %d AND C.id = UTC.conversation_id AND  UTC.user_id = %d AND UTC.is_opted_in = TRUE;""" %
 				   (gid, uid))
 	conversation_ids = []
 	for record in cur:
@@ -40,7 +40,7 @@ def getUserOptedInConversationsForGroup(uid, gid):
 def getUserOptedOutConversationsForGroup(uid, gid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""SELECT C.id FROM Conversations C, UsersToConversations UTC 
-				   WHERE C.group_id = %d AND C.id = UTC.conversation_id AND  UTC.user_id = %d AND UTC.isOptedIn = FALSE;""" %
+				   WHERE C.group_id = %d AND C.id = UTC.conversation_id AND  UTC.user_id = %d AND UTC.is_opted_in = FALSE;""" %
 				   (gid, uid))
 	conversation_ids = []
 	for record in cur:
@@ -57,7 +57,7 @@ def getClosedConversationsForGroup(gid):
 
 def getUsersOptedInToConversation(cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT user_id FROM UsersToConversations WHERE conversation_id = %d AND isOptedIn = TRUE;""" % (cid))
+	cur.execute("""SELECT user_id FROM UsersToConversations WHERE conversation_id = %d AND is_opted_in = TRUE;""" % (cid))
 	user_ids = []
 	for record in cur:
 		user_ids.append(record[0])
