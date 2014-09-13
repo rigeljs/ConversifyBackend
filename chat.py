@@ -80,7 +80,7 @@ def update(ws):
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
             print ",".join(result)
-            ws.send('{"results": ["' + '","'.join(result) + '"]}')
+            ws.send('{"results": ["' + '","'.join( result) + '"]}')
 
 
 def translateAndFetch(request):
@@ -89,7 +89,7 @@ def translateAndFetch(request):
     print request
     if methodName == "getMessagesInConversation":
         return getMessagesInConversation(arguments[0])
-    if methodName == "getConversationsInGroup"
+    if methodName == "getConversationsInGroup":
         return getConversationsInGroup(arguments[0],arguments[1])
 
 
