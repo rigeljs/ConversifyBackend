@@ -81,12 +81,3 @@ def broadcast(ws):
         if message:
             app.logger.info(u'Inserting message: {}'.format(message))
             redis.publish(REDIS_CHAN, message)
-
-@sockets.route('/receive')
-def outbox(ws):
-    """Sends outgoing chat messages, via `ChatBackend`."""
-    chats.register(ws)
-
-    while ws.socket is not None:
-        # Context switch while `ChatBackend.start` is running in the background.
-        gevent.sleep()
