@@ -62,7 +62,7 @@ def broadcast(ws):
                             clients[user].send(message)
                         except Exception:
                             print Exception
-                            clients.remove(client)
+                            del clients[user]
 
 def executeSendMessage(message):
     messages_dao.addMessageToConversation(message["content"], 
