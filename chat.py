@@ -108,7 +108,7 @@ def getConversationsInGroup(group_id, user_id):
     opted_in = conversation_dao.getUserOptedInConversationsForGroup(user_id, group_id)
     conversation_map = []
     for id in conversation_ids:
-        conversation_map.append({"conversation_id" : id, "opted_in" : opted_in in conversation_ids})
+        conversation_map.append(str({"conversation_id" : id, "opted_in" : opted_in in conversation_ids}))
     return conversation_map
 
 
