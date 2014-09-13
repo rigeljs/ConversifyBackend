@@ -73,10 +73,9 @@ def hello():
 @sockets.route('/broadcast')
 def broadcast(ws):
 	chats.register(ws)
-    while ws.socket is not None:
-        # Sleep to prevent *constant* context-switches.
-        gevent.sleep(0.1)
-        message = ws.receive()
-
-        if message:
-            app.logger.info(u'Inserting message: {}')
+	while ws.socket is not None:
+		#sleeps
+		gevent.sleep(0.1)
+		message = ws.receive()
+		if message:
+			app.logger.info(u'Inserting message: {}')
