@@ -25,13 +25,13 @@ def closeConversation(cid):
 
 def userOptInToConversation(uid, cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""UPDATE UsersToConversation SET is_opted_in = TRUE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
+	cur.execute("""UPDATE UsersToConversations SET is_opted_in = TRUE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
 	connection.commit()
 	cur.close()
 
 def userOptOutOfConversation(uid, cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""UPDATE UsersToConversation SET is_opted_in = FALSE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
+	cur.execute("""UPDATE UsersToConversations SET is_opted_in = FALSE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
 	connection.commit()
 	cur.close()
 
