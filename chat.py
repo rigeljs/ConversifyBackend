@@ -80,3 +80,11 @@ def broadcast(ws):
 		if message:
 			app.logger.info(u'Inserting message: {}')
 			redis.publish(REDIS_CHAN, message)
+
+@sockets.route('/intimate')
+def intimate(ws):
+	while ws.socket is not None:
+		gevent.sleep(0.1)
+		message = ws.receive()
+		if message:
+			ws.send(message)
