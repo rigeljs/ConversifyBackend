@@ -38,6 +38,7 @@ def broadcast(ws):
         print message
         if message and 'uid' in json.loads(message):
             clients.append(ws)
+            print "appending client"
             break
     while ws.socket is not None:
         #sleeps
@@ -45,7 +46,7 @@ def broadcast(ws):
         message = ws.receive()
         print message
         if message:
-            app.logger.info(u'Inserting message: {}')
+            print "inserting message"
             redis.publish(REDIS_CHAN, message)
             for client in clients:
                 try:
