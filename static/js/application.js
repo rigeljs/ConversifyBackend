@@ -2,7 +2,7 @@ var broadcast = new ReconnectingWebSocket("ws://"+ location.host + "/broadcast")
 var intimate = new ReconnectingWebSocket("ws://"+ location.host + "/intimate");
 
 broadcast.onopen = function() {
-	broadcast.send({uid : 1});
+	broadcast.send(JSON.stringify({uid : 1}));
 };
 
 broadcast.onclose = function(){
