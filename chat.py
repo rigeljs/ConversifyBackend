@@ -78,7 +78,7 @@ def update(ws):
         gevent.sleep(0.1)
         message = ws.receive()
         if message:
-            print message
+            print "got into the condition"
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
             print result
@@ -88,8 +88,8 @@ def update(ws):
 def translateAndFetch(request):
     methodName = request["method"]
     arguments = request["arguments"]
-    print arguments
-    print request
+    print "got into the translate method"
+    print methodName
     if methodName == "getMessagesInConversation":
         return getMessagesInConversation(arguments[0])
     if methodName == "getConversationsInGroup":
