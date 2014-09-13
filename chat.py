@@ -79,3 +79,4 @@ def broadcast(ws):
 		message = ws.receive()
 		if message:
 			app.logger.info(u'Inserting message: {}')
+			redis.publish(REDIS_CHAN, message)
