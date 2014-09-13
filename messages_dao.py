@@ -55,4 +55,12 @@ def usersWhoDisapproveMessage(mid):
 		user_ids.append(record[0])
 	return user_ids
 
+def getMessageTextById(mid):
+	cur = db_connection.GetCursorForConnection(connection)
+	cur.execute("""SELECT message_text FROM Messages WHERE message_id = %d;""" % (mid))
+	messages = []
+	for record in cur:
+		messages.append(record[0])
+	return messages
+
 
