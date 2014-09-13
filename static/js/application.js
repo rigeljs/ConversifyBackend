@@ -2,6 +2,19 @@ var broadcast = new ReconnectingWebSocket("ws://"+ location.host + "/broadcast")
 var update = new ReconnectingWebSocket("ws://"+ location.host + "/update");
 console.log(location.host);
 
+// First, checks if it isn't implemented yet.
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 broadcast.onopen = function() {
 	broadcast.send(JSON.stringify({uid : 1}));
 };
