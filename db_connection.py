@@ -2,7 +2,7 @@ import os
 import psycopg2
 import urlparse
 
-DATABASE_URL = 'postgres://kyphfcdvxzifjj:eLnzmwE-AIWxnCf4qzNQh1QwEQ@ec2-54-197-237-171.compute-1.amazonaws.com:5432/dcu520moi7j7g'
+DATABASE_URL = 'postgres://nurpkzhfspjxpx:xdQNuEeCnGu0siyeSEvUGEU7fp@ec2-54-225-255-208.compute-1.amazonaws.com:5432/d9ivq0hggrk4ip'
 urlparse.uses_netloc.append("postgres")
 url = urlparse.urlparse(os.environ[DATABASE_URL])
 
