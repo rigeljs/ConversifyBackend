@@ -16,6 +16,7 @@ from flask_sockets import Sockets
 import json
 import messages_dao
 import conversation_dao
+import group_dao
 
 REDIS_URL = os.environ['REDISCLOUD_URL']
 REDIS_CHAN = 'chat'
