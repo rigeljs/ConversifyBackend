@@ -20,7 +20,7 @@ $("#input-form-broad").on("submit", function(event) {
   event.preventDefault();
   var handle = $("#input-handle-broad")[0].value;
   var text   = $("#input-text-broad")[0].value;
-  broadcast.send(JSON.stringify({ handle: handle, text: text }));
+  broadcast.send(JSON.stringify({ sender_id: 1, conversation_id: 1, content: text }));
   $("#input-text-broad")[0].value = "";
 });
 
