@@ -100,6 +100,8 @@ def translateAndFetch(request):
         return getUsersInGroup(arguments[0])
     if methodName == "optOutOfConversation":
         return optOutOfConversation(arguments[0], arguments[1])
+    if methodName == "optInToConversation":
+        return optInToConversation(arguments[0], arguments[1])
 
 def getMessagesInConversation(conversation_id):
     messageIds = messages_dao.getMessagesInConversation(conversation_id)
@@ -125,6 +127,13 @@ def getUsersInGroup(group_id):
 def optOutOfConversation(user_id, conversation_id):
     try:
         conversation_dao.userOptOutOfConversation(user_id, conversation_id)
+        return ["success"]
+    except:
+        return ["failure"]
+
+def optInToConversation(user_id, conversation_id):
+    try:
+        conversation_dao.userOptInToConversation(user_id, conversation_id)
         return ["success"]
     except:
         return ["failure"]
