@@ -102,7 +102,7 @@ def getMessagesInConversation(conversation_id):
     return messages
 
 def getConversationsInGroup(group_id, user_id):
-    conversation_ids = conversation_dao.,getConversationsInGroup(group_id)
+    conversation_ids = conversation_dao.getConversationsInGroup(group_id)
     opted_in = getUserOptedInConversationsForGroup(user_id, group_id)
     conversation_map = []
     for id in conversation_ids:
