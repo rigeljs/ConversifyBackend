@@ -80,7 +80,7 @@ def update(ws):
             print message
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
-            print ",".join(result)
+            print result
             ws.send('{"results": ["' + '","'.join(result) + '"]}')
 
 
