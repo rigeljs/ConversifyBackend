@@ -78,6 +78,7 @@ def broadcast(ws):
         #sleeps
         gevent.sleep(0.1)
         message = ws.receive()
+        print message
         if message:
             app.logger.info(u'Inserting message: {}')
             redis.publish(REDIS_CHAN, message)
