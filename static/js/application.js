@@ -23,7 +23,7 @@ $("#input-form-int").on("submit", function(event) {
   event.preventDefault();
   var handle = $("#input-handle-int")[0].value;
   var text   = $("#input-text-int")[0].value;
-  broadcast.send(JSON.stringify({ handle: handle, text: text }));
+  intimate.send(JSON.stringify({ handle: handle, text: text }));
   $("#input-text-int")[0].value = "";
 });
 
