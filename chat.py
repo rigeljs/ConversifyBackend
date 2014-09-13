@@ -102,7 +102,7 @@ def translateAndFetch(request):
         return optOutOfConversation(arguments[0], arguments[1])
     if methodName == "optInToConversation":
         return optInToConversation(arguments[0], arguments[1])
-    if methodName === "getApproversForMessage":
+    if methodName == "getApproversForMessage":
         return getApproversForMessage(arguments[0])
     if methodName == "getDisapproversForMessage":
         return getDisapproversForMessage(arguments[0])
