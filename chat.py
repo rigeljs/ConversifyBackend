@@ -79,12 +79,4 @@ def broadcast(ws):
         message = ws.receive()
 
         if message:
-            app.logger.info(u'Inserting message: {}'
-
-@sockets.route('/submit')
-def submitmethod(ws):
-	pass
-
-@sockets.route('/receive')
-def receivemethod(ws):
-	pass
+            app.logger.info(u'Inserting message: {}')
