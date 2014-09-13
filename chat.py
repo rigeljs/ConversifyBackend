@@ -72,17 +72,18 @@ def hello():
 
 @sockets.route('/broadcast')
 def broadcast(ws):
-	sockets.append(ws)
+    sockets.append(ws)
     #chats.register(ws)
-	while ws.socket is not None:
-		#sleeps
-		gevent.sleep(0.1)
-		message = ws.receive()
-		if message:
-			app.logger.info(u'Inserting message: {}')
-			redis.publish(REDIS_CHAN, message)
+    while ws.socket is not None:
+        #sleeps
+        gevent.sleep(0.1)
+        message = ws.receive()
+        if message:
+            app.logger.info(u'Inserting message: {}')
+            redis.publish(REDIS_CHAN, message)
             for client in sockets:
                 client.send(message)
+
 
 @sockets.route('/intimate')
 def intimate(ws):
