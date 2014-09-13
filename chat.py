@@ -59,7 +59,8 @@ def broadcast(ws):
                     affected_users = executeSendMessage(message_json)
                     for user in affected_users:
                         try:
-                            clients[user].send(message)
+                            if user in clients:
+                                clients[user].send(message)
                         except Exception:
                             print Exception
                             del clients[user]
