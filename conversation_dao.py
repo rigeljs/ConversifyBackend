@@ -5,7 +5,7 @@ connection = db_connection.ConnectToDB()
 
 def getConversationsInGroup(group_id):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT id FROM Conversations WHERE group_id = %d;""" % (group_id))
+	cur.execute("""SELECT conversation_id FROM Conversations WHERE group_id = %d;""" % (group_id))
 	conversation_ids = []
 	for record in cur:
 		conversation_ids.append(record[0])
@@ -13,24 +13,32 @@ def getConversationsInGroup(group_id):
 
 def addConversationForGroup(group_id, topic):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""INSERT INTO Conversations (group_id, topic, isOpen) VALUES (%d, \'%s\', TRUE);""" % (group_id, topic))
+	cur.execute("""INSERT INTO Conversations (group_id, topic, is_open) VALUES (%d, \'%s\', TRUE);""" % (group_id, topic))
+	connection.commit()
+	cur.close()
 
 def closeConversation(cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""UPDATE Conversations SET isOpen = FALSE WHERE id = %d;""" % (cid))
+	cur.execute("""UPDATE Conversations SET is_open = FALSE WHERE conversation_id = %d;""" % (cid))
+	connection.commit()
+	cur.close()
 
 def userOptInToConversation(uid, cid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""UPDATE UsersToConversation SET is_opted_in = TRUE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
+	connection.commit()
+	cur.close()
 
 def userOptOutOfConversation(uid, cid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""UPDATE UsersToConversation SET is_opted_in = FALSE WHERE user_id = %d AND conversation_id = %d;""" % (uid, cid))
+	connection.commit()
+	cur.close()
 
 def getUserOptedInConversationsForGroup(uid, gid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT C.id FROM Conversations C, UsersToConversations UTC 
-				   WHERE C.group_id = %d AND C.id = UTC.conversation_id AND  UTC.user_id = %d AND UTC.is_opted_in = TRUE;""" %
+	cur.execute("""SELECT C.conversation_id FROM Conversations C, UsersToConversations UTC 
+				   WHERE C.group_id = %d AND C.conversation_id = UTC.conversation_id AND  UTC.user_id = %d AND UTC.is_opted_in = TRUE;""" %
 				   (gid, uid))
 	conversation_ids = []
 	for record in cur:
@@ -39,8 +47,8 @@ def getUserOptedInConversationsForGroup(uid, gid):
 
 def getUserOptedOutConversationsForGroup(uid, gid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT C.id FROM Conversations C, UsersToConversations UTC 
-				   WHERE C.group_id = %d AND C.id = UTC.conversation_id AND  UTC.user_id = %d AND UTC.is_opted_in = FALSE;""" %
+	cur.execute("""SELECT C.conversation_id FROM Conversations C, UsersToConversations UTC 
+				   WHERE C.group_id = %d AND C.conversation_id = UTC.conversation_id AND  UTC.user_id = %d AND UTC.is_opted_in = FALSE;""" %
 				   (gid, uid))
 	conversation_ids = []
 	for record in cur:
@@ -49,7 +57,7 @@ def getUserOptedOutConversationsForGroup(uid, gid):
 
 def getClosedConversationsForGroup(gid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT id FROM Conversations WHERE group_id = %d AND isOpen = FALSE;""" % (gid))
+	cur.execute("""SELECT conversation_id FROM Conversations WHERE group_id = %d AND is_open = FALSE;""" % (gid))
 	conversation_ids = []
 	for record in cur:
 		conversation_ids.append(record[0])
@@ -65,7 +73,7 @@ def getUsersOptedInToConversation(cid):
 
 def userCanWriteToConversation(uid, cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT canWrite FROM UsersToConversations WHERE conversation_id = %d AND user_id = %d;""" % (cid, uid))
+	cur.execute("""SELECT can_write FROM UsersToConversations WHERE conversation_id = %d AND user_id = %d;""" % (cid, uid))
 	record = cur.fetchone()
 	if not record:
 		return None

@@ -5,7 +5,7 @@ connection = db_connection.ConnectToDB()
 
 def getMessagesInConversation(cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT id FROM Messages WHERE conversation_id = %d;""" % (cid))
+	cur.execute("""SELECT message_id FROM Messages WHERE conversation_id = %d;""" % (cid))
 	message_ids = []
 	for record in cur:
 		message_ids.append(record[0])
@@ -25,6 +25,8 @@ def userApproveMessage(mid, uid):
 		cur.execute("""INSERT INTO UsersToMessages (user_id, message_id, approves) VALUES (%d, %d, TRUE);""" % (uid, mid))
 	elif not record[0]:
 		cur.execute("""UPDATE UsersToMessages SET approves=TRUE WHERE user_id = %d AND message_id = %d;""" % (uid, mid))
+	connection.commit()
+	cur.close()
 
 def userDisapproveMessage(mid, uid):
 	cur = db_connection.GetCursorForConnection(connection)
@@ -34,12 +36,14 @@ def userDisapproveMessage(mid, uid):
 		cur.execute("""INSERT INTO UsersToMessages (user_id, message_id, approves) VALUES (%d, %d, FALSE);""" % (uid, mid))
 	elif record[0]:
 		cur.execute("""UPDATE UsersToMessages SET approves=FALSE WHERE user_id = %d AND message_id = %d;""" % (uid, mid))
+	connection.commit()
+	cur.close()
 
 def usersWhoApproveMessage(mid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""SELECT user_id FROM UsersToMessages WHERE message_id = %d AND approves = TRUE;""" % (mid))
 	user_ids = []
-	for record in user_ids:
+	for record in cur:
 		user_ids.append(record[0])
 	return user_ids
 
@@ -47,7 +51,7 @@ def usersWhoDisapproveMessage(mid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""SELECT user_id FROM UsersToMessages WHERE message_id = %d AND approves = FALSE;""" % (mid))
 	user_ids = []
-	for record in user_ids:
+	for record in cur:
 		user_ids.append(record[0])
 	return user_ids
 
