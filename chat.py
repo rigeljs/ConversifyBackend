@@ -65,9 +65,9 @@ def broadcast(ws):
                             clients.remove(client)
 
 def executeSendMessage(message):
-    messages_dao.addMessageToConversation(message.content, 
-                                          message.conversation_id,
-                                          message.sender_id)
+    messages_dao.addMessageToConversation(message["content"], 
+                                          message["conversation_id"],
+                                          message["sender_id"])
     return conversation_dao.getUsersOptedInToConversation(message.conversation_id)
 
 @sockets.route('/intimate')
