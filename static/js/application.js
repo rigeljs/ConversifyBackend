@@ -1,5 +1,6 @@
 var broadcast = new ReconnectingWebSocket("ws://"+ location.host + "/broadcast");
-var intimate = new ReconnectingWebSocket("ws://"+ location.host + "/intimate")
+broadcast.send({uid : 1});
+var intimate = new ReconnectingWebSocket("ws://"+ location.host + "/intimate");
 
 broadcast.onclose = function(){
     console.log('outbox closed');
