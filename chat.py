@@ -102,6 +102,10 @@ def translateAndFetch(request):
         return optOutOfConversation(arguments[0], arguments[1])
     if methodName == "optInToConversation":
         return optInToConversation(arguments[0], arguments[1])
+    if methodName === "getApproversForMessage":
+        return getApproversForMessage(arguments[0])
+    if methodName == "getDisapproversForMessage":
+        return getDisapproversForMessage(arguments[0])
 
 def getMessagesInConversation(conversation_id):
     messageIds = messages_dao.getMessagesInConversation(conversation_id)
@@ -137,3 +141,9 @@ def optInToConversation(user_id, conversation_id):
         return ["success"]
     except:
         return ["failure"]
+
+def getApproversForMessage(message_id):
+    return messages_dao.usersWhoApproveMessage(message_id)
+
+def getDisapproversForMessage(message_id):
+    return messages_dao.usersWhoDisapproveMessage(message_id)
