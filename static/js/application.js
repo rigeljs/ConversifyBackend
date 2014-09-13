@@ -1,7 +1,10 @@
 var broadcast = new ReconnectingWebSocket("ws://"+ location.host + "/broadcast");
 var intimate = new ReconnectingWebSocket("ws://"+ location.host + "/intimate");
 
-$(document).ready(function() { broadcast.send({uid : 1}); });
+$(document).ready(function() {
+	console.log("in onload function"); 
+	broadcast.send({uid : 1});
+	});
 
 broadcast.onclose = function(){
     console.log('outbox closed');
