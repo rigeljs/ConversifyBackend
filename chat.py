@@ -70,11 +70,11 @@ chats.start()
 def hello():
     return render_template('index.html')
 
-@sockets.route('/submit')
-def inbox(ws):
-    """Receives incoming chat messages, inserts them into Redis."""
+@sockets.route('/broadcast')
+def broadcast(ws):
+	chats.register(ws)
     while ws.socket is not None:
-        # Sleep to prevent *contstant* context-switches.
+        # Sleep to prevent *constant* context-switches.
         gevent.sleep(0.1)
         message = ws.receive()
 
