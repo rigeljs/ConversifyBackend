@@ -5,7 +5,7 @@ connection = db_connection.ConnectToDB()
 
 def getMessagesInConversation(cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT message_id FROM Messages WHERE conversation_id = %d;""" % (cid))
+	cur.execute("""SELECT message_id FROM Messages WHERE conversation_id = %s;""" % (cid))
 	message_ids = []
 	for record in cur:
 		message_ids.append(record[0])
@@ -57,7 +57,7 @@ def usersWhoDisapproveMessage(mid):
 
 def getMessageTextById(mid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT message_text FROM Messages WHERE message_id = %d;""" % (mid))
+	cur.execute("""SELECT message_text FROM Messages WHERE message_id = %s;""" % (mid))
 	messages = []
 	for record in cur:
 		messages.append(record[0])
