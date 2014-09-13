@@ -5,7 +5,7 @@ connection = db_connection.ConnectToDB()
 
 def getConversationsInGroup(group_id):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT conversation_id FROM Conversations WHERE group_id = %d;""" % (group_id))
+	cur.execute("""SELECT conversation_id FROM Conversations WHERE group_id = %s;""" % (group_id))
 	conversation_ids = []
 	for record in cur:
 		conversation_ids.append(record[0])
