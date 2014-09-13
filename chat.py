@@ -143,7 +143,7 @@ def optInToConversation(user_id, conversation_id):
         return ["failure"]
 
 def getApproversForMessage(message_id):
-    return messages_dao.usersWhoApproveMessage(message_id)
+    return [str(x) for x in messages_dao.usersWhoApproveMessage(message_id)]
 
 def getDisapproversForMessage(message_id):
-    return messages_dao.usersWhoDisapproveMessage(message_id)
+    return [str(x) for x in messages_dao.usersWhoDisapproveMessage(message_id)]
