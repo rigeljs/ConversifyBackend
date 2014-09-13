@@ -85,7 +85,8 @@ def update(ws):
 def translateAndFetch(request):
     methodName = request["method"]
     arguments = request["arguments"]
-    if methodName = "getMessagesInConversation":
+    if methodName == "getMessagesInConversation":
+        getMessagesInConversation(arguments[0])
 
 
 def getMessagesInConversation(conversation_id):
