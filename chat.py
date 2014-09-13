@@ -96,6 +96,8 @@ def translateAndFetch(request):
         return getConversationsInGroup(arguments[0],arguments[1])
     if methodName == "getGroupsForUser":
         return getGroupsForUser(arguments[0])
+    if methodName = "getUsersInGroup":
+        return getUsersInGroup(arguments[0])
 
 def getMessagesInConversation(conversation_id):
     messageIds = messages_dao.getMessagesInConversation(conversation_id)
@@ -114,3 +116,6 @@ def getConversationsInGroup(group_id, user_id):
 
 def getGroupsForUser(user_id):
     return [str(x) for x in group_dao.getGroupsForUser(user_id)]
+
+def getUsersInGroup(group_id):
+    return group_dao.getUsersInGroup(group_id)
