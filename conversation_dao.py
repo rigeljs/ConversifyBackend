@@ -70,7 +70,6 @@ def userCanWriteToConversation(uid, cid):
 	if not record:
 		return None
 	return record[0]
-	
 
 
 
