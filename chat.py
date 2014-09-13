@@ -25,7 +25,8 @@ sockets = Sockets(app)
 redis = redis.from_url(REDIS_URL)
 
 
-clients = []
+clients = {}
+
 @app.route('/')
 def hello():
     return render_template('index.html')
@@ -36,10 +37,12 @@ def broadcast(ws):
         gevent.sleep(0.1)
         message = ws.receive()
         print message
-        if message and 'uid' in json.loads(message):
-            clients.append(ws)
-            print "appending client"
-            break
+        if message:
+            message_json = json.loads(message)
+            if 'uid' in message_json:
+                clients[message_json['uid']] = ws
+                print "registering client"
+                break
     while ws.socket is not None:
         #sleeps
         gevent.sleep(0.1)
@@ -47,14 +50,23 @@ def broadcast(ws):
         print message
         if message:
             print "inserting message"
-            redis.publish(REDIS_CHAN, message)
-            for client in clients:
-                try:
-                    client.send(message)
-                except Exception:
-                    print Exception
-                    clients.remove(client)
+            message_json = json.loads(message)
+            if ('content' in message_json and
+                'conversation_id' in message_json and
+                'sender_id' in message_json):
+                    affected_users = executeSendMessage(message_json)
+                    for user in affected_users:
+                        try:
+                            clients[user].send(message)
+                        except Exception:
+                            print Exception
+                            clients.remove(client)
 
+def executeSendMessage(message):
+    messages_dao.addMessageToConversation(message.content, 
+                                          message.conversation_id,
+                                          message.sender_id)
+    return conversation_dao.getUsersOptedInToConversation(message.conversation_id)
 
 @sockets.route('/intimate')
 def intimate(ws):
