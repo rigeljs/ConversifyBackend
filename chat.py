@@ -24,7 +24,6 @@ sockets = Sockets(app)
 redis = redis.from_url(REDIS_URL)
 
 
-
 class ChatBackend(object):
     """Interface for registering and updating WebSocket clients."""
 
@@ -78,6 +77,7 @@ def broadcast(ws):
         #sleeps
         gevent.sleep(0.1)
         message = ws.receive()
+        print message
         if message:
             app.logger.info(u'Inserting message: {}')
             redis.publish(REDIS_CHAN, message)
