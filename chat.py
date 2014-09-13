@@ -31,8 +31,13 @@ def hello():
 
 @sockets.route('/broadcast')
 def broadcast(ws):
-    clients.append(ws)
-    #chats.register(ws)
+    while ws.socket is not None:
+        gevent.sleep(0.1)
+        message = ws.receive()
+        print message
+        if message and message.uid:
+            clients.append(ws)
+            break
     while ws.socket is not None:
         #sleeps
         gevent.sleep(0.1)
