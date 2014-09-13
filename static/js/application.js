@@ -1,5 +1,6 @@
 var broadcast = new ReconnectingWebSocket("ws://"+ location.host + "/broadcast");
 var intimate = new ReconnectingWebSocket("ws://"+ location.host + "/intimate");
+console.log(location.host);
 
 broadcast.onopen = function() {
 	broadcast.send(JSON.stringify({uid : 1}));
