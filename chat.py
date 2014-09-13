@@ -77,6 +77,7 @@ def update(ws):
         gevent.sleep(0.1)
         message = ws.receive()
         if message:
+            print message
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
             print ",".join(result)
