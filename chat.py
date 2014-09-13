@@ -79,7 +79,7 @@ def update(ws):
         if message:
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
-            ws.send(result)
+            ws.send(",".join(result))
 
 
 def translateAndFetch(request):
