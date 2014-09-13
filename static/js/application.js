@@ -33,6 +33,7 @@ $("#input-form-int").on("submit", function(event) {
 });
 
 update.onmessage = function(message) {
+  console.log(message);
   var data = JSON.parse(message.data);
   $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text(data.handle).html() + "</div><div class='panel-body'>" + $('<span/>').text(data.text).html() + "</div></div>");
   $("#chat-text").stop().animate({

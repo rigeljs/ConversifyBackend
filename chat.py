@@ -79,12 +79,14 @@ def update(ws):
         if message:
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
+            print ",".join(result)
             ws.send(",".join(result))
 
 
 def translateAndFetch(request):
     methodName = request["method"]
     arguments = request["arguments"]
+    print request
     if methodName == "getMessagesInConversation":
         return getMessagesInConversation(arguments[0])
 
