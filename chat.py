@@ -73,12 +73,12 @@ def executeSendMessage(message):
 
 @sockets.route('/update')
 def update(ws):
-	while ws.socket is not None:
-		gevent.sleep(0.1)
-		message = ws.receive()
-		if message:
+    while ws.socket is not None:
+        gevent.sleep(0.1)
+        message = ws.receive()
+        if message:
             message_json = json.loads(message)
-			result = translateAndFetch(message)
+            result = translateAndFetch(message)
             ws.send(result)
 
 
@@ -90,6 +90,7 @@ def translateAndFetch(request):
 
 def getMessagesInConversation(conversation_id):
     messages = messages_dao.getMessagesInConversation(conversation_id)
+
 
 
 
