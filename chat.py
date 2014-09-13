@@ -96,7 +96,7 @@ def translateAndFetch(request):
         return getConversationsInGroup(arguments[0],arguments[1])
     if methodName == "getGroupsForUser":
         return getGroupsForUser(arguments[0])
-    if methodName = "getUsersInGroup":
+    if methodName == "getUsersInGroup":
         return getUsersInGroup(arguments[0])
 
 def getMessagesInConversation(conversation_id):
