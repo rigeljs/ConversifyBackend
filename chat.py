@@ -13,6 +13,7 @@ import redis
 import gevent
 from flask import Flask, render_template
 from flask_sockets import Sockets
+import json
 
 REDIS_URL = os.environ['REDISCLOUD_URL']
 REDIS_CHAN = 'chat'
@@ -35,7 +36,7 @@ def broadcast(ws):
         gevent.sleep(0.1)
         message = ws.receive()
         print message
-        if message and message.uid:
+        if message and 'uid' in json.loads(message):
             clients.append(ws)
             break
     while ws.socket is not None:
