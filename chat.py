@@ -24,7 +24,7 @@ sockets = Sockets(app)
 redis = redis.from_url(REDIS_URL)
 
 
-class ChatBackend(object):
+'''class ChatBackend(object):
     """Interface for registering and updating WebSocket clients."""
 
     def __init__(self):
@@ -60,6 +60,7 @@ class ChatBackend(object):
     def start(self):
         """Maintains Redis subscription in the background."""
         gevent.spawn(self.run)
+'''
 
 #chats = ChatBackend()
 #chats.start()
