@@ -39,7 +39,7 @@ def usersWhoApproveMessage(mid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""SELECT user_id FROM UsersToMessages WHERE message_id = %d AND approves = TRUE;""" % (mid))
 	user_ids = []
-	for record in user_ids:
+	for record in cur:
 		user_ids.append(record[0])
 	return user_ids
 
@@ -47,8 +47,16 @@ def usersWhoDisapproveMessage(mid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""SELECT user_id FROM UsersToMessages WHERE message_id = %d AND approves = FALSE;""" % (mid))
 	user_ids = []
-	for record in user_ids:
+	for record in cur:
 		user_ids.append(record[0])
 	return user_ids
+
+def getMessageTextById(mid):
+	cur = db_connection.GetCursorForConnection(connection)
+	cur.execute("""SELECT message_text FROM Messages WHERE message_id = %d;""" % (mid))
+	messages = []
+	for record in cur:
+		messages.append(record[0])
+	return messages
 
 
