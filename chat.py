@@ -86,11 +86,16 @@ def translateAndFetch(request):
     methodName = request["method"]
     arguments = request["arguments"]
     if methodName == "getMessagesInConversation":
-        getMessagesInConversation(arguments[0])
+        return getMessagesInConversation(arguments[0])
 
 
 def getMessagesInConversation(conversation_id):
-    messages = messages_dao.getMessagesInConversation(conversation_id)
+    messageIds = messages_dao.getMessagesInConversation(conversation_id)
+    messages = []
+    for messageId in messageIds:
+        messages.extend(messages_dao.getMessageTextById(messageId))
+    return messages
+
 
 
 
