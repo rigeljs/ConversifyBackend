@@ -81,9 +81,13 @@ def broadcast(ws):
         print message
         if message:
             app.logger.info(u'Inserting message: {}')
-            #redis.publish(REDIS_CHAN, message)
+            redis.publish(REDIS_CHAN, message)
             for client in clients:
-                client.send(message)
+                try:
+                    client.send(message)
+                except Exception:
+                    print Exception
+                    clients.remove(client)
 
 
 @sockets.route('/intimate')
