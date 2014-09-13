@@ -28,7 +28,7 @@ $("#input-form-int").on("submit", function(event) {
   event.preventDefault();
   var methodName = $("#input-handle-int")[0].value;
   var arg   = $("#input-text-int")[0].value;
-  update.send(JSON.stringify({ method: methodName, arguments: arg }));
+  update.send(String.format('{ "method": {0}, "arguments": {1} }', methodName, arg));
   $("#input-text-int")[0].value = "";
 });
 
