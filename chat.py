@@ -109,7 +109,7 @@ def getConversationsInGroup(group_id, user_id):
     conversation_map = []
     for id in conversation_ids:
         conversation_map.append({"conversation_id" : id, "opted_in" : opted_in in conversation_ids})
-    return messages
+    return conversation_map
 
 
 
