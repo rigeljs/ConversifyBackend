@@ -65,14 +65,14 @@ class ChatBackend(object):
 chats = ChatBackend()
 #chats.start()
 
-sockets = []
+clients = []
 @app.route('/')
 def hello():
     return render_template('index.html')
 
 @sockets.route('/broadcast')
 def broadcast(ws):
-    sockets.append(ws)
+    clients.append(ws)
     #chats.register(ws)
     while ws.socket is not None:
         #sleeps
@@ -81,7 +81,7 @@ def broadcast(ws):
         if message:
             app.logger.info(u'Inserting message: {}')
             redis.publish(REDIS_CHAN, message)
-            for client in sockets:
+            for client in clients:
                 client.send(message)
 
 
