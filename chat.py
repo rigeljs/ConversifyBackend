@@ -113,4 +113,4 @@ def getConversationsInGroup(group_id, user_id):
     return conversation_map
 
 def getGroupsForUser(user_id):
-    return group_dao.getGroupsForUser(user_id)
+    return [str(x) for x in group_dao.getGroupsForUser(user_id)]
