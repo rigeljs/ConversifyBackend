@@ -13,7 +13,7 @@ def getMessagesInConversation(cid):
 
 def addMessageToConversation(content, cid, uid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""INSERT INTO Messages (conversation_id, user_id, content) VALUES (%d, %d, \'%s\');""" % (cid, uid, content))
+	cur.execute("""INSERT INTO Messages (conversation_id, user_id, message_text) VALUES (%d, %d, \'%s\');""" % (cid, uid, content))
 	connection.commit()
 	cur.close()
 
