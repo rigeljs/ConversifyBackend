@@ -191,6 +191,6 @@ def authenticateUser(user_id, device_id):
         else:
             return ["success", "false"]
     except Exception:
-        traceback.print_exc(file=sys.stdout)\
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
