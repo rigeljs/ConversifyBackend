@@ -32,7 +32,7 @@ update.onclose = function(){
 $("#input-form-broad").on("submit", function(event) {
   event.preventDefault();
   var text   = $("#input-text-broad")[0].value;
-  broadcast.send(JSON.stringify({ sender_id: 1, conversation_id: 1, content: text, time_updated: new Date().getTime() }));
+  broadcast.send(JSON.stringify({ sender_id: 1, conversation_id: 1, content: text, time_updated: new Date().toISOString() }));
   $("#input-text-broad")[0].value = "";
 });
 
