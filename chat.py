@@ -262,8 +262,11 @@ def createConversation(group_id, topic_name, is_announcement):
 def getUserConversationsForGroup(user_id, group_id):
     try:
         rows = conversation_dao.getUserConversationsForGroup(user_id, group_id)
-        rows.insert(0, "success")
-        return rows
+        messages = []
+        for row in rows:
+            message = {"conversation_id": row[0], "topic_name": row[1], "is_open": row[2], "is_opted_in": row[3], "can_write": row[4]}
+            messages.append(str(message))
+        messages.insert(0, "success")
     except Exception:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
