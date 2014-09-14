@@ -86,7 +86,7 @@ def update(ws):
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
             print result
-            ws.send('{"results": ["' + '","'.join(result) + '"]}')
+            ws.send('{"methodName": "' + request["method"] + '", "results": ["' + '","'.join(result) + '"]}')
 
 
 def translateAndFetch(request):
@@ -122,30 +122,46 @@ def translateAndFetch(request):
         return createConversation(arguments[0], arguments[1], arguments[2])
     if methodName == "getUserConversationsForGroup":
         return getUserConversationsForGroup(arguments[0], arguments[1])
+    if methodName == "updateUser":
+        return updateUser(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5])
 
 def getMessagesInConversation(conversation_id):
-    messageIds = messages_dao.getMessagesInConversation(conversation_id)
-    messages = []
-    for messageId in messageIds:
-        messages.extend(messages_dao.getMessageTextById(messageId))
-    return messages
+    try:
+        messageIds = messages_dao.getMessagesInConversation(conversation_id)
+        messages = []
+        for messageId in messageIds:
+            messages.extend(messages_dao.getMessageTextById(messageId))
+        return ["success"].extend(messages)
+    except:
+        return ["failure"]
 
 def getConversationsInGroup(group_id, user_id):
-    conversation_ids = conversation_dao.getConversationsInGroup(group_id)
-    opted_in = conversation_dao.getUserOptedInConversationsForGroup(user_id, group_id)
-    conversation_map = []
-    for id in conversation_ids:
-        conversation_map.append(str({"conversation_id" : id, "opted_in" : opted_in in conversation_ids}))
-    return conversation_map
+    try:
+        conversation_ids = conversation_dao.getConversationsInGroup(group_id)
+        opted_in = conversation_dao.getUserOptedInConversationsForGroup(user_id, group_id)
+        conversation_map = []
+        for id in conversation_ids:
+            conversation_map.append(str({"conversation_id" : id, "opted_in" : opted_in in conversation_ids}))
+        return ["success"].extend(conversation_map)
+    except:
+        return ["failure"]
 
 def getUserConversation(user_id, group_id):
     conversation_dao.
 
 def getGroupsForUser(user_id):
-    return [str(x) for x in group_dao.getGroupsForUser(user_id)]
+    try:
+        groups = [str(x) for x in group_dao.getGroupsForUser(user_id)]
+        return ["success"].extend(groups)
+    except:
+        return ["failure"]
 
 def getUsersInGroup(group_id):
-    return group_dao.getUsersInGroup(group_id)
+    try:
+        users = group_dao.getUsersInGroup(group_id)
+        return ["success"].extend(users)
+    except:
+        return ["failure"]
 
 def optOutOfConversation(user_id, conversation_id):
     try:
@@ -227,8 +243,11 @@ def getUserConversationsForGroup(user_id, group_id):
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
-
-
-
-
+def updateUser(user_id, user_name, user_email, user_phone, device_id, timestamp):
+    try:
+        user_dao.updateUser(user_id, user_name, user_email, user_phone, device_id, timestamp)
+        return ["success"]
+    except Exception:
+        traceback.print_exc(file=sys.stdout)
+        return ["failure"]
 

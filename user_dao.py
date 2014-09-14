@@ -5,11 +5,12 @@ connection = db_connection.ConnectToDB()
 
 def addUser(name, number, email, device_id, timestamp):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""INSERT INTO Users (user_name, user_phone, user_email) Values (%s, %s,%s) RETURNING user_id;""" % (name, number,email))
+	cur.execute("""INSERT INTO Users (user_name, user_phone, user_email) Values ('%s', '%s', '%s') RETURNING user_id;""" % (name, number,email))
 	user_id = cur.fetchone()[0]
-	cur.execute("""INSERT INTO Devices (device_id, user_id, last_login_time) Values (%s, %s, to_timestamp(%s));""" % (device_id, user_id, timestamp))
+	cur.execute("""INSERT INTO Devices (device_id, user_id, last_login_time) Values ('%s', %s, to_timestamp(%s));""" % (device_id, user_id, timestamp))
 	connection.commit()
 	cur.close()
+	return user_id
 
 def removeUser(uid):
 	cur = db_connection.GetCursorForConnection(connection)
@@ -57,3 +58,10 @@ def authenticateUser(user_id, device_id):
 	print c
 	return c
 
+def updateUser(user_id, user_name, user_email, user_phone, device_id, timestamp):
+	cur = db_connection.GetCursorForConnection(connection)
+	cur.execute("""UPDATE Users SET user_phone = '%s', user_email = '%s', user_name = '%s' WHERE user_id = %s"""
+					% (user_phone, user_email, user_name, user_id));
+	cur.execute("""INSERT INTO Devices (device_id, user_id, last_login_time) Values ('%s', %s, to_timestamp(%s));""" % (device_id, user_id, timestamp))
+	connection.commit()
+	cur.close()
