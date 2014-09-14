@@ -51,5 +51,7 @@ def getUserEmail(uid):
 def authenticateUser(user_id, device_id):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""SELECT COUNT(user_id) FROM Devices WHERE user_id = %s AND device_id = '%s';""" % (user_id, device_id))
-	return cur.fetchone()[0]
+	c = cur.fetchone()[0]
+	print c
+	return c
 
