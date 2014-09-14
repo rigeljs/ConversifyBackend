@@ -131,6 +131,7 @@ def getMessagesInConversation(conversation_id):
         messages = []
         for info in messageInfo:
             print info
+            print getApproversForMessage(str(info[0]))
             messageDict = {"message_id" : info[0], "user_id" : info[1], "message_text" : info[3], \
             "time_updated" : info[4], "approval_count" : len(getApproversForMessage(str(info[0]))) }
             messages.append(str(messagesDict))
@@ -186,7 +187,9 @@ def optInToConversation(user_id, conversation_id):
 
 def getApproversForMessage(message_id):
     try:
-        return ["success"].extend([str(x) for x in messages_dao.usersWhoApproveMessage(message_id)])
+        result = [str(x) for x in messages_dao.usersWhoApproveMessage(message_id)]
+        print result
+        return ["success"].extend(result)
     except:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
