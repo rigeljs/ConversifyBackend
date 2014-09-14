@@ -45,7 +45,7 @@ $("#input-form-update").on("submit", function(event) {
 });
 
 update.onmessage = function(message) {
-  console.log(message.data);
+  console.log(message);
   var data = JSON.parse(message.data);
   $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text("method results").html() + "</div><div class='panel-body'>" + $('<span/>').text(data.results).html() + "</div></div>");
   $("#chat-text").stop().animate({
@@ -55,7 +55,7 @@ update.onmessage = function(message) {
 
 broadcast.onmessage = function(message) {
   console.log(message);
-  var data = JSON.parse(message);
+  var data = JSON.parse(message.data);
   console.log(data);
   $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text(data.sender_id).html() + "</div><div class='panel-body'>" + $('<span/>').text(data.content).html() + "</div></div>");
   $("#chat-text").stop().animate({
