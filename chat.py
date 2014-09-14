@@ -162,21 +162,24 @@ def addUserToGroup(user_id, group_id):
     try:
         group_dao.addUserToGroup(user_id, group_id)
         return ["success"]
-    except:
+    except Exception:
+        print Exception
         return ["failure"]
 
 def removeUserFromGroup(user_id, group_id):
     try:
         group_dao.removeUserFromGroup(user_id, group_id)
         return  ["success"]
-    except:
+    except Exception:
+        print Exception
         return ["failure"]
 
 def addUser(user_name, user_email, user_phone, device_id, timestamp):
     try:
         user_id = user_dao.addUser(user_name, user_phone, user_email, device_id, timestamp)
         return ["success", str(user_id)]
-    except:
+    except Exception:
+        print Exception
         return ["failure"]
 
 def authenticateUser(user_id, device_id):
@@ -185,6 +188,7 @@ def authenticateUser(user_id, device_id):
             return ["success", "true"]
         else:
             return ["success", "false"]
-    except:
+    except Exception:
+        print Exception
         return ["failure"]
 
