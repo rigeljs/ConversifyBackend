@@ -61,15 +61,13 @@ def broadcast(ws):
                 'conversation_id' in message_json and
                 'sender_id' in message_json):
                     (message_to_send, affected_users) = executeSendMessage(message_json)
-                    print message_to_send
-                    print str(affected_users)
                     for user in affected_users:
                         try:
-                            if user in clients:
-                                clients[user].send(message_to_send)
+                            if str(user) in clients:
+                                clients[str(user)].send(message_to_send)
                         except Exception:
                             print Exception
-                            del clients[user]
+                            del clients[str(user)]
 
 def executeSendMessage(message):
     mid = messages_dao.addMessageToConversation(message["content"], 
@@ -77,9 +75,9 @@ def executeSendMessage(message):
                                                 message["conversation_id"],
                                                 message["sender_id"])
     message = messages_dao.getMessageById(mid)[0]
-    message_to_return = str({"message_id": message[0], "conversation_id": message[1], "group_id": message[2],\
-                             "sender_id": message[3], "content": message[4], "time_updated": message[5]})
-    return (message_to_return, conversation_dao.getUsersOptedInToConversation(message[1]))
+    message_to_return = str({"message_id": str(message[0]), "conversation_id": str(message[1]), "group_id": str(message[2]),\
+                             "sender_id": str(message[3]), "content": message[4], "time_updated": message[5]})
+    return (message_to_return, conversation_dao.getUsersOptedInToConversation(str(message[1]))
 
 @sockets.route('/update')
 def update(ws):
