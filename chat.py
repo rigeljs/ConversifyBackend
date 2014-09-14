@@ -77,7 +77,7 @@ def executeSendMessage(message):
     message = messages_dao.getMessageById(mid)[0]
     message_to_return = str({"message_id": message[0], "conversation_id": message[1], "group_id": message[2],
                              "sender_id": message[3], "content": message[4], "time_updated": message[5]}
-    return (message_to_return, conversation_dao.getUsersOptedInToConversation(message["conversation_id"])))
+    return (message_to_return, conversation_dao.getUsersOptedInToConversation(message["conversation_id"]))
 
 @sockets.route('/update')
 def update(ws):
