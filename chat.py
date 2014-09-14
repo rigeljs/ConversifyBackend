@@ -267,6 +267,7 @@ def getUserConversationsForGroup(user_id, group_id):
             message = {"conversation_id": row[0], "topic_name": row[1], "is_open": row[2], "is_opted_in": row[3], "can_write": row[4]}
             messages.append(str(message))
         messages.insert(0, "success")
+        return messages
     except Exception:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
