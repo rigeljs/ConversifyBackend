@@ -248,7 +248,7 @@ def createConversation(group_id, topic_name, is_announcement):
                     conversation_dao.addUserToConversation(user_id, cid, False)
             else:
                 conversation_dao.addUserToConversation(user_id, cid, True)
-        return ["success", cid]
+        return ["success", str(cid)]
     except Exception:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
