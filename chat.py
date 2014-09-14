@@ -276,3 +276,20 @@ def updateUser(user_id, user_name, user_email, user_phone, device_id, timestamp)
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
+def getUserMessages(user_id):
+    try:
+        messageInfo = messages_dao.getMessagesForUser(user_id)
+        messages = []
+        for info in messageInfo:
+            print info
+            print getApproversForMessage(str(info[0]))
+            messageDict = {"message_id" : info[0], "conversation_id": info[2] "message_text" : info[3], \
+            "time_updated" : info[4], "approval_count" : len(getApproversForMessage(str(info[0]))) }
+            messages.append(str(messageDict))
+
+        messages.insert(0, "success")
+        return messages
+    except:
+        traceback.print_exc(file=sys.stdout)
+        return ["failure"]
+
