@@ -48,7 +48,7 @@ def userOptOutOfConversation(uid, cid):
 
 def getUserConversationsForGroup(uid, gid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT C.conversation_id, C.topic_name, C.is_open, UTC.is_opted_in, UTC.can_write FROM Conversations C, UsersToConversations UTC 
+	cur.execute("""SELECT C.conversation_id, C.topic_name, C.is_open, UTC.is_opted_in, UTC.can_write, C.group_id FROM Conversations C, UsersToConversations UTC 
 				   WHERE C.group_id = %s AND C.conversation_id = UTC.conversation_id AND  UTC.user_id = %s;""" %
 				   (gid, uid))
 	conversation_ids = []

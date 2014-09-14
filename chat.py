@@ -274,7 +274,7 @@ def getUserConversationsForGroup(user_id, group_id):
         rows = conversation_dao.getUserConversationsForGroup(user_id, group_id)
         messages = []
         for row in rows:
-            message = {"conversation_id": str(row[0]), "topic_name": row[1], "is_open": row[2], "is_opted_in": row[3], "can_write": row[4]}
+            message = {"conversation_id": str(row[0]), "topic_name": row[1], "is_open": row[2], "is_opted_in": row[3], "can_write": row[4], "group_id": row[5]}
             messages.append(str(message))
         messages.insert(0, "success")
         return messages
