@@ -55,6 +55,7 @@ def broadcast(ws):
             print "inserting message"
             message_json = json.loads(message)
             if ('content' in message_json and
+                'time_updated' in message_json and
                 'conversation_id' in message_json and
                 'sender_id' in message_json):
                     affected_users = executeSendMessage(message_json)
@@ -68,6 +69,7 @@ def broadcast(ws):
 
 def executeSendMessage(message):
     messages_dao.addMessageToConversation(message["content"], 
+                                          message["time_updated"]
                                           message["conversation_id"],
                                           message["sender_id"])
     return conversation_dao.getUsersOptedInToConversation(message["conversation_id"])
