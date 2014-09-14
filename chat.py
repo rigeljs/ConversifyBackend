@@ -220,16 +220,16 @@ def authenticateUser(user_id, device_id):
 def createConversation(group_id, topic_name, is_announcement):
     try:
         cid = conversation_dao.addConversationForGroup(group_id, topic_name)
-        user_ids = getUsersInGroup(group_id)
-        admin_ids = getAdminForGroup(group_id)
+        user_ids = group_dao.getUsersInGroup(group_id)
+        admin_ids = group_dao.getAdminForGroup(group_id)
         for user_id in user_ids:
             if is_announcement:
                 if user_id in admin_ids:
-                    conversation_dao.addUserToConversation(user_id, cid, TRUE)
+                    conversation_dao.addUserToConversation(user_id, cid, True)
                 else:
-                    conversation_dao.addUserToConversation(user_id, cid, FALSE)
+                    conversation_dao.addUserToConversation(user_id, cid, False)
             else:
-                conversation_dao.addUserToConversation(user_id, cid, TRUE)
+                conversation_dao.addUserToConversation(user_id, cid, True)
         return ["success", cid]
     except Exception:
         traceback.print_exc(file=sys.stdout)
