@@ -118,6 +118,8 @@ def translateAndFetch(request):
         return authenticateUser(arguments[0], arguments[1])
     if methodName == "addUser":
         return addUser(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4])
+    if methodName == "updateUser":
+        return updateUser(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5])
 
 def getMessagesInConversation(conversation_id):
     messageIds = messages_dao.getMessagesInConversation(conversation_id)
@@ -194,3 +196,10 @@ def authenticateUser(user_id, device_id):
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
+def updateUser(user_id, user_name, user_email, user_phone, device_id, timestamp):
+    try:
+        user_dao.updateUser(user_id, user_name, user_email, user_phone, device_id, timestamp)
+        return ["success"]
+    except Exception:
+        traceback.print_exc(file=sys.stdout)
+        return ["failure"]
