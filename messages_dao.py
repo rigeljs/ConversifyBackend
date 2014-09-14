@@ -8,7 +8,7 @@ def getMessagesInConversation(cid):
 	cur.execute("""SELECT * FROM Messages WHERE conversation_id = %s ORDER BY time_updated;""" % (cid))
 	message_ids = []
 	for record in cur:
-		message_ids.append(record[0])
+		message_ids.append(record)
 	return message_ids
 
 def addMessageToConversation(content, time_updated, cid, uid):

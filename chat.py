@@ -130,12 +130,14 @@ def getMessagesInConversation(conversation_id):
         messageInfo = messages_dao.getMessagesInConversation(conversation_id)
         messages = []
         for info in messageInfo:
+            print info
             messageDict = {"message_id" : info[0], "user_id" : info[1], "message_text" : info[3], \
-            "time_updated" : info[4], "approval_count" : len(getApproversForMessage(info[0])) }
+            "time_updated" : info[4], "approval_count" : len(getApproversForMessage(str(info[0]))) }
             messages.append(str(messagesDict))
 
         return ["success"].extend(messages)
     except:
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def getConversationsInGroup(group_id, user_id):
@@ -147,6 +149,7 @@ def getConversationsInGroup(group_id, user_id):
             conversation_map.append(str({"conversation_id" : id, "opted_in" : opted_in in conversation_ids}))
         return ["success"].extend(conversation_map)
     except:
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def getGroupsForUser(user_id):
@@ -154,6 +157,7 @@ def getGroupsForUser(user_id):
         groups = [str(x) for x in group_dao.getGroupsForUser(user_id)]
         return ["success"].extend(groups)
     except:
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def getUsersInGroup(group_id):
@@ -161,6 +165,7 @@ def getUsersInGroup(group_id):
         users = group_dao.getUsersInGroup(group_id)
         return ["success"].extend(users)
     except:
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def optOutOfConversation(user_id, conversation_id):
@@ -168,6 +173,7 @@ def optOutOfConversation(user_id, conversation_id):
         conversation_dao.userOptOutOfConversation(user_id, conversation_id)
         return ["success"]
     except:
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def optInToConversation(user_id, conversation_id):
@@ -175,13 +181,22 @@ def optInToConversation(user_id, conversation_id):
         conversation_dao.userOptInToConversation(user_id, conversation_id)
         return ["success"]
     except:
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def getApproversForMessage(message_id):
-    return [str(x) for x in messages_dao.usersWhoApproveMessage(message_id)]
+    try:
+        return ["success"].extend([str(x) for x in messages_dao.usersWhoApproveMessage(message_id)])
+    except:
+        traceback.print_exc(file=sys.stdout)
+        return ["failure"]
 
 def getDisapproversForMessage(message_id):
-    return [str(x) for x in messages_dao.usersWhoDisapproveMessage(message_id)]
+    try:
+        return ["success"].extend([str(x) for x in messages_dao.usersWhoDisapproveMessage(message_id)])
+    except:
+        traceback.print_exc(file=sys.stdout)
+        return ["failure"]
 
 def addUserToGroup(user_id, group_id):
     try:
