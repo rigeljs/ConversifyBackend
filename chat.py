@@ -188,7 +188,7 @@ def optInToConversation(user_id, conversation_id):
 def getApproversForMessage(message_id):
     try:
         result = [str(x) for x in messages_dao.usersWhoApproveMessage(message_id)]
-        print result
+        print ["success"].extend(result)
         return ["success"].extend(result)
     except:
         traceback.print_exc(file=sys.stdout)
