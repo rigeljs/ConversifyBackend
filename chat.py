@@ -66,12 +66,12 @@ def broadcast(ws):
                     print clients
                     for user in affected_users:
                         try:
-                            if str(user) in clients:
+                            if user in clients:
                                 print "user found: " + str(user)
-                                clients[str(user)].send(message_to_send)
+                                clients[user].send(message_to_send)
                         except Exception:
                             print Exception
-                            del clients[str(user)]
+                            del clients[user]
 
 def executeSendMessage(message):
     mid = messages_dao.addMessageToConversation(message["content"], 
