@@ -13,9 +13,11 @@ def getMessagesInConversation(cid):
 
 def addMessageToConversation(content, time_updated, cid, uid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""INSERT INTO Messages (conversation_id, time_updated, user_id, message_text) VALUES (%s, to_timestamp(%s), %s, '%s');""" % (cid, time_updated, uid, content))
+	cur.execute("""INSERT INTO Messages (conversation_id, time_updated, user_id, message_text) VALUES (%s, to_timestamp(%s), %s, '%s') RETURNING message_id;""" % (cid, time_updated, uid, content))
+	mid = cur.fetchone()[0]
 	connection.commit()
 	cur.close()
+	return mid
 
 def userApproveMessage(mid, uid):
 	cur = db_connection.GetCursorForConnection(connection)
@@ -55,12 +57,12 @@ def usersWhoDisapproveMessage(mid):
 		user_ids.append(record[0])
 	return user_ids
 
-def getMessageTextById(mid):
+def getMessageById(mid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT message_text FROM Messages WHERE message_id = %s;""" % (mid))
+	cur.execute("""SELECT m.message_id, m.conversation_id, c.group_id, m.user_id, m.message_text, m.time_updated FROM Messages m, Conversations c WHERE m.message_id = %s;""" % (mid))
 	messages = []
 	for record in cur:
-		messages.append(record[0])
+		messages.append(record)
 	return messages
 
 

@@ -60,21 +60,24 @@ def broadcast(ws):
                 'time_updated' in message_json and
                 'conversation_id' in message_json and
                 'sender_id' in message_json):
-                    affected_users = executeSendMessage(message_json)
+                    (message_to_send, affected_users) = executeSendMessage(message_json)
                     for user in affected_users:
                         try:
                             if user in clients:
-                                clients[user].send(message)
+                                clients[user].send(message_to_send)
                         except Exception:
                             print Exception
                             del clients[user]
 
 def executeSendMessage(message):
-    messages_dao.addMessageToConversation(message["content"], 
-                                          message["time_updated"],
-                                          message["conversation_id"],
-                                          message["sender_id"])
-    return conversation_dao.getUsersOptedInToConversation(message["conversation_id"])
+    mid = messages_dao.addMessageToConversation(message["content"], 
+                                                message["time_updated"],
+                                                message["conversation_id"],
+                                                message["sender_id"])
+    message = messages_dao.getMessageById(mid)[0]
+    message_to_return = str({"message_id": message[0], "conversation_id": message[1], "group_id": message[2],
+                             "sender_id": message[3], "content": message[4], "time_updated": message[5]}
+    return (message_to_return, conversation_dao.getUsersOptedInToConversation(message["conversation_id"])))
 
 @sockets.route('/update')
 def update(ws):
