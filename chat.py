@@ -167,9 +167,12 @@ def getConversationsInGroup(group_id, user_id):
 
 def getGroupsForUser(user_id):
     try:
-        groups = [str(x) for x in group_dao.getGroupsForUser(user_id)]
-        groups.insert(0, "success")
-        return groups
+        groups = group_dao.getGroupsForUser(user_id)
+        allGroups = []
+        for g in groups:
+            allGroups.append(str{"group_id": str(g[0]), "group_name": str(g[1])})
+        allGroups.insert(0, "success")
+        return allGroups
     except:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
