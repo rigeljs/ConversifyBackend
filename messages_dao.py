@@ -11,7 +11,7 @@ def getMessagesInConversation(cid):
 		message_ids.append(record[0])
 	return message_ids
 
-def addMessageToConversation(content, time_sent, cid, uid):
+def addMessageToConversation(content, time_updated, cid, uid):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""INSERT INTO Messages (conversation_id, time_updated, user_id, message_text) VALUES (%s, %s, %s, \'%s\');""" % (cid, time_updated, uid, content))
 	connection.commit()
