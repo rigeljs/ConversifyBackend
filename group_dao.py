@@ -5,7 +5,7 @@ connection = db_connection.ConnectToDB()
 
 def addGroup(name):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""INSERT INTO Groups (group_name) VALUES (\'%s\');""" % (name))
+	cur.execute("""INSERT INTO Groups (group_name) VALUES (%s);""" % (name))
 	connection.commit()
 	cur.close()
 
@@ -17,7 +17,7 @@ def removeGroup(group_id):
 
 def setGroupName(group_id, name):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""UPDATE Groups SET group_name=\'%s\' WHERE group_id = %s;""" % (name, group_id))
+	cur.execute("""UPDATE Groups SET group_name=%s WHERE group_id = %s;""" % (name, group_id))
 	connection.commit()
 	cur.close()
 

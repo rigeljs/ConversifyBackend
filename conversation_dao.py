@@ -13,7 +13,7 @@ def getConversationsInGroup(group_id):
 
 def addConversationForGroup(group_id, topic):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""INSERT INTO Conversations (group_id, topic, is_open) VALUES (%d, \'%s\', TRUE);""" % (group_id, topic))
+	cur.execute("""INSERT INTO Conversations (group_id, topic, is_open) VALUES (%d, %s, TRUE);""" % (group_id, topic))
 	connection.commit()
 	cur.close()
 
