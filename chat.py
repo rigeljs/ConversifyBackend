@@ -132,7 +132,7 @@ def getMessagesInConversation(conversation_id):
         for info in messageInfo:
             print info
             messageDict = {"message_id" : info[0], "user_id" : info[1], "message_text" : info[3], \
-            "time_updated" : info[4], "approval_count" : len(getApproversForMessage(info[0])) }
+            "time_updated" : info[4], "approval_count" : len(getApproversForMessage(str(info[0]))) }
             messages.append(str(messagesDict))
 
         return ["success"].extend(messages)
