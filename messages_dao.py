@@ -5,7 +5,7 @@ connection = db_connection.ConnectToDB()
 
 def getMessagesInConversation(cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT message_id FROM Messages WHERE conversation_id = %s ORDER BY time_updated;""" % (cid))
+	cur.execute("""SELECT * FROM Messages WHERE conversation_id = %s ORDER BY time_updated;""" % (cid))
 	message_ids = []
 	for record in cur:
 		message_ids.append(record[0])

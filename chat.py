@@ -127,10 +127,13 @@ def translateAndFetch(request):
 
 def getMessagesInConversation(conversation_id):
     try:
-        messageIds = messages_dao.getMessagesInConversation(conversation_id)
+        messageInfo = messages_dao.getMessagesInConversation(conversation_id)
         messages = []
-        for messageId in messageIds:
-            messages.extend(messages_dao.getMessageTextById(messageId))
+        for info in messageInfo:
+            messageDict = {"message_id" : info[0], "user_id" : info[1], "message_text" : info[3], \
+            "time_updated" : info[4], "approval_count" : len(getApproversForMessage(info[0])) }
+            messages.append(str(messagesDict))
+
         return ["success"].extend(messages)
     except:
         return ["failure"]
