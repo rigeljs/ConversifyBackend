@@ -67,7 +67,7 @@ def getUsersInGroup(group_id):
 
 def getGroupsForUser(user_id):
 	cur = db_connection.GetCursorForConnection(connection)
-	query = """SELECT u.group_id, g.gropu_name FROM userstogroups u INNER JOIN groups  on g.group_id = u.group_id where u.user_id = %s;""" % (user_id)
+	query = """SELECT u.group_id, g.group_name FROM userstogroups u INNER JOIN groups ON g.group_id = u.group_id WHERE u.user_id = %s;""" % (user_id)
 	cur.execute(query)
 	groups = []
 	for record in cur:
