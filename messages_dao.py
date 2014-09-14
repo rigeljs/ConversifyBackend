@@ -59,7 +59,7 @@ def usersWhoDisapproveMessage(mid):
 
 def getMessageById(mid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT m.message_id, m.conversation_id, c.group_id, m.user_id, m.message_text, m.time_updated FROM Messages m, Conversations c WHERE m.message_id = %s;""" % (mid))
+	cur.execute("""SELECT m.message_id, m.conversation_id, c.group_id, m.user_id, m.message_text, extract(epoch from m.time_updated) FROM Messages m, Conversations c WHERE m.message_id = %s;""" % (mid))
 	messages = []
 	for record in cur:
 		messages.append(record)
