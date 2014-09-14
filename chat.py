@@ -69,7 +69,7 @@ def broadcast(ws):
                             if user in clients:
                                 print "user found: " + str(user)
                                 print message_to_send
-                                clients[user].send(message)
+                                clients[user].send(message_to_send)
                         except Exception:
                             print Exception
                             del clients[user]
