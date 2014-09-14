@@ -17,6 +17,7 @@ import json
 import messages_dao
 import conversation_dao
 import group_dao
+import sys, traceback
 
 REDIS_URL = os.environ['REDISCLOUD_URL']
 REDIS_CHAN = 'chat'
@@ -163,7 +164,7 @@ def addUserToGroup(user_id, group_id):
         group_dao.addUserToGroup(user_id, group_id)
         return ["success"]
     except Exception:
-        print Exception.format_exc()
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def removeUserFromGroup(user_id, group_id):
@@ -171,7 +172,7 @@ def removeUserFromGroup(user_id, group_id):
         group_dao.removeUserFromGroup(user_id, group_id)
         return  ["success"]
     except Exception:
-        print Exception.format_exc()
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def addUser(user_name, user_email, user_phone, device_id, timestamp):
@@ -179,7 +180,7 @@ def addUser(user_name, user_email, user_phone, device_id, timestamp):
         user_id = user_dao.addUser(user_name, user_phone, user_email, device_id, timestamp)
         return ["success", str(user_id)]
     except Exception:
-        print Exception.format_exc()
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def authenticateUser(user_id, device_id):
@@ -189,6 +190,6 @@ def authenticateUser(user_id, device_id):
         else:
             return ["success", "false"]
     except Exception:
-        print Exception.format_exc()
+        traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
