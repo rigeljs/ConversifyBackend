@@ -29,7 +29,8 @@ def addUserToConversation(uid, cid, can_write):
 	cur = db_connection.GetCursorForConnection(connection)
 	cur.execute("""SELECT user_id, conversation_id FROM UsersToConversations WHERE user_id = %s AND conversation_id = %s;""" % (uid, cid))
 	if not cur.fetchone():
-		cur.execute("""INSERT INTO UsersToConversations (user_id, conversation_id, can_write) VALUES (%s, %s, %b);""" % (uid, cid, can_write))
+		can_write_string = 'TRUE' if can_write else 'FALSE'
+		cur.execute("""INSERT INTO UsersToConversations (user_id, conversation_id, can_write) VALUES (%s, %s, %s);""" % (uid, cid, can_write_string))
 	connection.commit()
 	cur.close()
 
