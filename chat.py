@@ -114,6 +114,8 @@ def translateAndFetch(request):
         return removeUserFromGroup(arguments[0], arguments[1])
     if methodName == "authenticateUser":
         return authenticateUser(arguments[0], arguments[1])
+    if methodName == "addUser":
+        return addUser(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4])
 
 def getMessagesInConversation(conversation_id):
     messageIds = messages_dao.getMessagesInConversation(conversation_id)
@@ -176,11 +178,13 @@ def addUser(user_name, user_email, user_phone, device_id, timestamp):
         return ["success", str(user_id)]
     except:
         return ["failure"]
+
 def authenticateUser(user_id, device_id):
     try: 
         if user_dao.authenticateUser(user_id, device_id) > 0:
-            return ["true"]
+            return ["success", "true"]
         else:
-            return ["false"]
+            return ["success", "false"]
     except:
-        return ["false"]
+        return ["failure"]
+
