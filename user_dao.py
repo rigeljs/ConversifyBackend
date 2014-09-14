@@ -5,9 +5,9 @@ connection = db_connection.ConnectToDB()
 
 def addUser(name, number, email, device_id, timestamp):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""INSERT INTO Users (user_name, user_phone, user_email) Values (%s, %s,%s) RETURNING user_id;""" % (name, number,email))
+	cur.execute("""INSERT INTO Users (user_name, user_phone, user_email) Values ('%s', '%s', '%s') RETURNING user_id;""" % (name, number,email))
 	user_id = cur.fetchone()[0]
-	cur.execute("""INSERT INTO Devices (device_id, user_id, last_login_time) Values (%s, %s, to_timestamp(%s));""" % (device_id, user_id, timestamp))
+	cur.execute("""INSERT INTO Devices (device_id, user_id, last_login_time) Values ('%s', %s, to_timestamp(%s));""" % (device_id, user_id, timestamp))
 	connection.commit()
 	cur.close()
 
