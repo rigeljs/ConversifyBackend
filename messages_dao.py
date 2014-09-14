@@ -5,7 +5,7 @@ connection = db_connection.ConnectToDB()
 
 def getMessagesInConversation(cid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT message_id FROM Messages WHERE conversation_id = %s ORDER BY time_uploaded;""" % (cid))
+	cur.execute("""SELECT message_id FROM Messages WHERE conversation_id = %s ORDER BY time_updated;""" % (cid))
 	message_ids = []
 	for record in cur:
 		message_ids.append(record[0])
@@ -13,7 +13,7 @@ def getMessagesInConversation(cid):
 
 def addMessageToConversation(content, time_sent, cid, uid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""INSERT INTO Messages (conversation_id, time_uploaded, user_id, message_text) VALUES (%s, %s, %s, \'%s\');""" % (cid, time_uploaded, uid, content))
+	cur.execute("""INSERT INTO Messages (conversation_id, time_updated, user_id, message_text) VALUES (%s, %s, %s, \'%s\');""" % (cid, time_updated, uid, content))
 	connection.commit()
 	cur.close()
 
