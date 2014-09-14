@@ -55,7 +55,7 @@ update.onmessage = function(message) {
 
 broadcast.onmessage = function(message) {
   console.log("received message");
-  var data = JSON.parse(message.data);
+  var data = JSON.parse(message);
   console.log(data);
   $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text(data.sender_id).html() + "</div><div class='panel-body'>" + $('<span/>').text(data.content).html() + "</div></div>");
   $("#chat-text").stop().animate({
