@@ -71,7 +71,7 @@ def getGroupsForUser(user_id):
 	cur.execute(query)
 	groups = []
 	for record in cur:
-		groups.append(record[0])
+		groups.append(record)
 	return groups
 
 def userIsAdminForGroup(user_id, group_id):
