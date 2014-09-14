@@ -118,6 +118,10 @@ def translateAndFetch(request):
         return authenticateUser(arguments[0], arguments[1])
     if methodName == "addUser":
         return addUser(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4])
+    if methodName == "createConversation":
+        return createConversation(arguments[0], arguments[1], arguments[2])
+    if methodName == "getUserConversationsForGroup":
+        return getUserConversationsForGroup(arguments[0], arguments[1])
 
 def getMessagesInConversation(conversation_id):
     messageIds = messages_dao.getMessagesInConversation(conversation_id)
@@ -133,6 +137,9 @@ def getConversationsInGroup(group_id, user_id):
     for id in conversation_ids:
         conversation_map.append(str({"conversation_id" : id, "opted_in" : opted_in in conversation_ids}))
     return conversation_map
+
+def getUserConversation(user_id, group_id):
+    conversation_dao.
 
 def getGroupsForUser(user_id):
     return [str(x) for x in group_dao.getGroupsForUser(user_id)]
@@ -193,4 +200,35 @@ def authenticateUser(user_id, device_id):
     except Exception:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
+
+def createConversation(group_id, topic_name, is_announcement):
+    try:
+        cid = conversation_dao.addConversationForGroup(group_id, topic_name)
+        user_ids = getUsersInGroup(group_id)
+        admin_ids = getAdminForGroup(group_id)
+        for user_id in user_ids:
+            if is_announcement:
+                if user_id in admin_ids:
+                    conversation_dao.addUserToConversation(user_id, cid, TRUE)
+                else:
+                    conversation_dao.addUserToConversation(user_id, cid, FALSE)
+            else:
+                conversation_dao.addUserToConversation(user_id, cid, TRUE)
+        return ["success", cid]
+    except Exception:
+        traceback.print_exc(file=sys.stdout)
+        return ["failure"]
+
+def getUserConversationsForGroup(user_id, group_id):
+    try:
+        rows = conversation_dao.getUserConversationsForGroup(user_id, group_id)
+        return ["success"].extend(rows)
+    except Exception:
+        traceback.print_exc(file=sys.stdout)
+        return ["failure"]
+
+
+
+
+
 

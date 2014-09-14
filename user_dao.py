@@ -13,13 +13,13 @@ def addUser(name, number, email, device_id, timestamp):
 
 def removeUser(uid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""DELETE FROM Users WHERE user_id = %d;""" % (uid))
+	cur.execute("""DELETE FROM Users WHERE user_id = %s;""" % (uid))
 	connection.commit()
 	cur.close()
 
 def setName(uid, name):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""UPDATE Users SET user_name=%s WHERE id = %d;""" % (name, uid))		
+	cur.execute("""UPDATE Users SET user_name=%s WHERE id = %s;""" % (name, uid))		
 	connection.commit()
 	cur.close()
 
@@ -37,17 +37,17 @@ def setEmail(uid, email):
 
 def getUserName(uid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT user_name FROM Users WHERE user_id = %d;""" % uid)
+	cur.execute("""SELECT user_name FROM Users WHERE user_id = %s;""" % uid)
 	return cur.fetchone()[0]
 
 def getUserPhoneNumber(uid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT user_phone FROM Users WHERE user_id = %d;""" % uid)
+	cur.execute("""SELECT user_phone FROM Users WHERE user_id = %s;""" % uid)
 	return cur.fetchone()[0]
 
 def getUserEmail(uid):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT user_email FROM Users WHERE user_id = %d;""" % uid)
+	cur.execute("""SELECT user_email FROM Users WHERE user_id = %s;""" % uid)
 	return cur.fetchone()[0]
 
 def authenticateUser(user_id, device_id):
