@@ -45,7 +45,7 @@ $("#input-form-update").on("submit", function(event) {
 });
 
 update.onmessage = function(message) {
-  console.log(message);
+  console.log(message.data);
   var data = JSON.parse(message.data);
   $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + $('<span/>').text("method results").html() + "</div><div class='panel-body'>" + $('<span/>').text(data.results).html() + "</div></div>");
   $("#chat-text").stop().animate({
