@@ -127,7 +127,7 @@ def translateAndFetch(request):
         return getUserConversationsForGroup(arguments[0], arguments[1])
     if methodName == "updateUser":
         return updateUser(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5])
-    if methodName = "getUserMessages":
+    if methodName == "getUserMessages":
         return getUserMessages(arguments[0])
 
 def getMessagesInConversation(conversation_id):
