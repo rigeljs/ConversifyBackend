@@ -86,7 +86,7 @@ def update(ws):
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
             print result
-            ws.send('{"methodName": "' + request["method"] + '", "results": ["' + '","'.join(result) + '"]}')
+            ws.send('{"methodName": "' + message_json["method"] + '", "results": ["' + '","'.join(result) + '"]}')
 
 
 def translateAndFetch(request):
