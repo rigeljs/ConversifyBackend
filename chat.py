@@ -69,7 +69,7 @@ def broadcast(ws):
 
 def executeSendMessage(message):
     messages_dao.addMessageToConversation(message["content"], 
-                                          message["time_updated"]
+                                          message["time_updated"],
                                           message["conversation_id"],
                                           message["sender_id"])
     return conversation_dao.getUsersOptedInToConversation(message["conversation_id"])
