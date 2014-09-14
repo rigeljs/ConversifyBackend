@@ -170,7 +170,7 @@ def getGroupsForUser(user_id):
         groups = group_dao.getGroupsForUser(user_id)
         allGroups = []
         for g in groups:
-            allGroups.append(str({"group_id": str(g[0]), "group_name": str(g[1])}))
+            allGroups.append(str({"group_id": g[0], "group_name": g[1]}))
         allGroups.insert(0, "success")
         return allGroups
     except:
