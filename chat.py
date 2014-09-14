@@ -61,9 +61,12 @@ def broadcast(ws):
                 'conversation_id' in message_json and
                 'sender_id' in message_json):
                     (message_to_send, affected_users) = executeSendMessage(message_json)
+                    print message_to_send
+                    print affected_users
                     for user in affected_users:
                         try:
                             if str(user) in clients:
+                                print "user found: " + str(user)
                                 clients[str(user)].send(message_to_send)
                         except Exception:
                             print Exception
