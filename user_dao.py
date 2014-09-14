@@ -10,6 +10,7 @@ def addUser(name, number, email, device_id, timestamp):
 	cur.execute("""INSERT INTO Devices (device_id, user_id, last_login_time) Values ('%s', %s, to_timestamp(%s));""" % (device_id, user_id, timestamp))
 	connection.commit()
 	cur.close()
+	return user_id
 
 def removeUser(uid):
 	cur = db_connection.GetCursorForConnection(connection)
