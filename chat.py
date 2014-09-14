@@ -77,9 +77,9 @@ def executeSendMessage(message):
                                                 message["conversation_id"],
                                                 message["sender_id"])
     message = messages_dao.getMessageById(mid)[0]
-    message_to_return = str({"message_id": message[0], "conversation_id": message[1], "group_id": message[2],
-                             "sender_id": message[3], "content": message[4], "time_updated": message[5]}
-    return (message_to_return, conversation_dao.getUsersOptedInToConversation(message["conversation_id"])))
+    message_to_return = str({"message_id": message[0], "conversation_id": message[1], "group_id": message[2],\
+                             "sender_id": message[3], "content": message[4], "time_updated": message[5]})
+    return (message_to_return, conversation_dao.getUsersOptedInToConversation(message[1]))
 
 @sockets.route('/update')
 def update(ws):
@@ -129,6 +129,8 @@ def translateAndFetch(request):
         return getUserConversationsForGroup(arguments[0], arguments[1])
     if methodName == "updateUser":
         return updateUser(arguments[0],arguments[1],arguments[2],arguments[3],arguments[4],arguments[5])
+    if methodName == "getUserMessages":
+        return getUserMessages(arguments[0])
 
 def getMessagesInConversation(conversation_id):
     try:
@@ -292,7 +294,7 @@ def getUserMessages(user_id):
         for info in messageInfo:
             print info
             print getApproversForMessage(str(info[0]))
-            messageDict = {"message_id" : info[0], "conversation_id": info[2] "message_text" : info[3], \
+            messageDict = {"message_id" : info[0], "conversation_id": info[2], "message_text" : info[3], \
             "time_updated" : info[4], "approval_count" : len(getApproversForMessage(str(info[0]))) }
             messages.append(str(messageDict))
 
