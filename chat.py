@@ -134,7 +134,7 @@ def getMessagesInConversation(conversation_id):
             print getApproversForMessage(str(info[0]))
             messageDict = {"message_id" : info[0], "user_id" : info[1], "message_text" : info[3], \
             "time_updated" : info[4], "approval_count" : len(getApproversForMessage(str(info[0]))) }
-            messages.append(str(messagesDict))
+            messages.append(str(messageDict))
 
         messages.insert(0, "success")
         return messages
