@@ -85,7 +85,7 @@ def update(ws):
             print "got into the condition"
             message_json = json.loads(message)
             result = translateAndFetch(message_json)
-            print ",".join(result)
+            print result
             ws.send('{"methodName": "' + message_json["method"] + '", "results": ["' + '","'.join(result) + '"]}')
 
 
