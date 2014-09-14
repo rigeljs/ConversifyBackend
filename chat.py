@@ -136,7 +136,8 @@ def getMessagesInConversation(conversation_id):
             "time_updated" : info[4], "approval_count" : len(getApproversForMessage(str(info[0]))) }
             messages.append(str(messagesDict))
 
-        return ["success"].extend(messages)
+        messages.insert(0, "success")
+        return messages
     except:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
@@ -148,7 +149,8 @@ def getConversationsInGroup(group_id, user_id):
         conversation_map = []
         for id in conversation_ids:
             conversation_map.append(str({"conversation_id" : id, "opted_in" : opted_in in conversation_ids}))
-        return ["success"].extend(conversation_map)
+        conversation_map.insert(0,"success")
+        return conversation_map
     except:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
@@ -156,7 +158,8 @@ def getConversationsInGroup(group_id, user_id):
 def getGroupsForUser(user_id):
     try:
         groups = [str(x) for x in group_dao.getGroupsForUser(user_id)]
-        return ["success"].extend(groups)
+        groups.insert(0, "success")
+        return groups
     except:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
@@ -164,7 +167,8 @@ def getGroupsForUser(user_id):
 def getUsersInGroup(group_id):
     try:
         users = group_dao.getUsersInGroup(group_id)
-        return ["success"].extend(users)
+        users.insert(0, "success")
+        return users
     except:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
@@ -188,15 +192,17 @@ def optInToConversation(user_id, conversation_id):
 def getApproversForMessage(message_id):
     try:
         result = [str(x) for x in messages_dao.usersWhoApproveMessage(message_id)]
-        print ["success"].extend(result)
-        return ["success"].extend(result)
+        result.insert(0, "success")
+        return result
     except:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
 
 def getDisapproversForMessage(message_id):
     try:
-        return ["success"].extend([str(x) for x in messages_dao.usersWhoDisapproveMessage(message_id)])
+        result = [str(x) for x in messages_dao.usersWhoDisapproveMessage(message_id)]
+        result.insert(0, "success")
+        return result
     except:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
@@ -256,7 +262,8 @@ def createConversation(group_id, topic_name, is_announcement):
 def getUserConversationsForGroup(user_id, group_id):
     try:
         rows = conversation_dao.getUserConversationsForGroup(user_id, group_id)
-        return ["success"].extend(rows)
+        rows.insert(0, "success")
+        return rows
     except Exception:
         traceback.print_exc(file=sys.stdout)
         return ["failure"]
