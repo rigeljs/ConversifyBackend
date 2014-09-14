@@ -63,6 +63,7 @@ def broadcast(ws):
                     (message_to_send, affected_users) = executeSendMessage(message_json)
                     print message_to_send
                     print affected_users
+                    print clients
                     for user in affected_users:
                         try:
                             if str(user) in clients:
