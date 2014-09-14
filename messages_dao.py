@@ -65,4 +65,10 @@ def getMessageById(mid):
 		messages.append(record)
 	return messages
 
-
+def getMessagesForUser(user_id):
+	cur = db_connection.GetCursorForConnection(connection)
+	cur.execute("""SELECT * FROM Messages WHERE user_id = %s ORDER BY time_updated;""" % (user_id))
+	message_ids = []
+	for record in cur:
+		message_ids.append(record)
+	return message_ids
