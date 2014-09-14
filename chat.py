@@ -17,6 +17,7 @@ import json
 import messages_dao
 import conversation_dao
 import group_dao
+import user_dao
 import sys, traceback
 
 REDIS_URL = os.environ['REDISCLOUD_URL']
