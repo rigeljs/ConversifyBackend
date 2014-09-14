@@ -167,3 +167,10 @@ def removeUserFromGroup(user_id, group_id):
         return  ["success"]
     except:
         return ["failure"]
+
+def addUser(user_name, user_email, user_phone, device_id, timestamp):
+    try:
+        user_id = user_dao.addUser(user_name, user_phone, user_email, device_id, timestamp)
+        return ["success", str(user_id)]
+    except:
+        return ["failure"]
