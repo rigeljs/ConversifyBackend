@@ -130,6 +130,7 @@ def getMessagesInConversation(conversation_id):
         messageInfo = messages_dao.getMessagesInConversation(conversation_id)
         messages = []
         for info in messageInfo:
+            print info
             messageDict = {"message_id" : info[0], "user_id" : info[1], "message_text" : info[3], \
             "time_updated" : info[4], "approval_count" : len(getApproversForMessage(info[0])) }
             messages.append(str(messagesDict))
