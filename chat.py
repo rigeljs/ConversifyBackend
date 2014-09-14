@@ -146,9 +146,6 @@ def getConversationsInGroup(group_id, user_id):
     except:
         return ["failure"]
 
-def getUserConversation(user_id, group_id):
-    conversation_dao.
-
 def getGroupsForUser(user_id):
     try:
         groups = [str(x) for x in group_dao.getGroupsForUser(user_id)]
