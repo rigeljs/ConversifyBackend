@@ -67,7 +67,8 @@ def getUsersInGroup(group_id):
 
 def getGroupsForUser(user_id):
 	cur = db_connection.GetCursorForConnection(connection)
-	cur.execute("""SELECT group_id FROM UsersToGroups WHERE user_id = %s;""" % (user_id))
+	query = """SELECT group_id FROM UsersToGroups WHERE user_id = %s;""" % (user_id)
+	cur.execute(query)
 	groups = []
 	for record in cur:
 		groups.append(record[0])
